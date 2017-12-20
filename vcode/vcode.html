@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PHP VCODE</title>
+</head>
+
+<body>
+<img src="vcode.php?class=get">
+<input name="code" id="code" value="" type="text">
+<input name="" value="submit" type="button" onclick="_submit()">
+</body>
+<script>
+    function _submit() {
+        var code = document.getElementById("code").value;
+        console.info(code)
+        if(code == '') {
+            alert('请输入结果');
+            return false;
+        }
+        window.location.href = "vcode.php?code="+code;
+    }
+</script>
+</html>
