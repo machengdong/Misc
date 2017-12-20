@@ -48,24 +48,28 @@ class Verification
         return $this->result;
     }
 
-    //生成图像
+    /**
+     * Generate the image
+     */
     private function genImage()
     {
-        //创建一个真彩色图像
+
         $this->imgresource = imagecreatetruecolor($this->width,$this->height);
-        //设置背景色
+
         list($r,$g,$b) = explode(' ',$this->backgroundColor[mt_rand(0,6)]);
 
         $bgColor = imagecolorallocate($this->imgresource,$r,$g,$b);
-        //填充背景色
+
         imagefill($this->imgresource,0,0,$bgColor);
-        //设置边框颜色
+
         $borderColor=imagecolorallocate($this->imgresource,0,0,0);
-        //画一个边框
+
         imagerectangle($this->imgresource,0,0,$this->width-1,$this->height-1,$borderColor);
     }
 
-    //画字
+    /**
+     * Draw a character horizontally
+     */
     private function setChars()
     {
         $code = $this->genCode();
@@ -79,25 +83,30 @@ class Verification
         }
     }
 
+    /**
+     * Set the interference
+     */
     private function setDisturb()
     {
-        //画干扰点
+
         for ($i=0;$i<$this->disturb_spot;$i++) {
-            //设置随机颜色
+
             $randColor=imagecolorallocate($this->imgresource,rand(0,255),rand(0,255),rand(0,255));
-            //画点
+
             imagesetpixel($this->imgresource,rand(1,$this->width-2),rand(1,$this->height-2),$randColor);
         }
 
-        //画干扰线
         for ($i=0;$i<$this->disturb_wire;$i++) {
-            //设置随机颜色
+
             $randColor=imagecolorallocate($this->imgresource,rand(0,200),rand(0,200),rand(0,200));
-            //画线
+
             imageline($this->imgresource,rand(1,$this->width-2),rand(1,$this->height-2),rand(1,$this->height-2),rand(1,$this->width-2),$randColor);
         }
     }
 
+    /**
+     * Output image verification code
+     */
     private function outputImage()
     {
         header("Content-Type:image/png");
